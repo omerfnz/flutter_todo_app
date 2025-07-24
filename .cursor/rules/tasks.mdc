@@ -1,0 +1,313 @@
+---
+alwaysApply: true
+---
+
+# Implementation Plan
+
+- [ ] 1. Set up project configuration and dependencies
+  - Create pubspec.yaml with all required dependencies and dev dependencies
+  - Configure analysis_options.yaml with very_good_analysis rules
+  - Set up folder structure according to architectural requirements
+  - _Requirements: 9.1, 9.2, 9.3, 3.5_
+
+- [ ] 2. Create core constants and extensions
+  - Implement app_constants.dart with application-wide constants
+  - Implement cache_constants.dart with Hive storage keys and constants
+  - Create build_context_extension.dart for localization and theme access
+  - _Requirements: 3.5, 6.3_
+
+- [ ] 3. Implement data model with serialization and Hive support
+  - Create TodoModel class with id, title, and isCompleted fields
+  - Add JsonSerializable annotations for JSON serialization
+  - Add HiveType and HiveField annotations for Hive storage
+  - Implement fromJson, toJson, copyWith methods and Equatable
+  - _Requirements: 2.5, 3.4, 8.5_
+
+- [ ] 4. Create localization assets and configuration
+  - Create assets/translations/tr-TR.json with Turkish translations
+  - Create assets/translations/en-US.json with English translations
+  - Implement localization_initialize.dart for EasyLocalization setup
+  - Update pubspec.yaml to include translation assets
+  - _Requirements: 6.1, 6.2, 6.3, 6.4_
+
+- [ ] 5. Implement dark theme configuration
+  - Create theme_initialize.dart with Material 3 dark theme
+  - Configure ColorScheme, AppBarTheme, CardTheme, and FloatingActionButtonTheme
+  - Ensure theme follows Material 3 design principles
+  - _Requirements: 4.1, 4.2_
+
+- [ ] 6. Create cache management layer
+  - Implement TodoCacheManager class with Hive operations
+  - Add methods for getAllTodos, saveTodo, updateTodo, deleteTodo, clearAllTodos
+  - Include proper error handling and Hive box management
+  - _Requirements: 2.1, 2.2, 2.3, 3.6_
+
+- [ ] 7. Implement service layer for business logic
+  - Create TodoService class with business logic methods
+  - Add loadTodos, addTodo, toggleTodoCompletion, deleteTodo methods
+  - Integrate with TodoCacheManager and handle ID generation
+  - Include error handling and validation
+  - _Requirements: 1.4, 1.5, 1.6, 1.7, 2.2_
+
+- [ ] 8. Create BLoC state management components
+- [ ] 8.1 Implement TodoEvent classes
+  - Create LoadTodos, AddTodo, UpdateTodo, DeleteTodo event classes
+  - Ensure all events extend Equatable for proper comparison
+  - _Requirements: 3.1, 3.4_
+
+- [ ] 8.2 Implement TodoState class
+  - Create TodoState with isLoading, todos list, and error fields
+  - Implement copyWith method and Equatable for immutability
+  - Define initial, loading, success, and error state patterns
+  - _Requirements: 3.1, 3.3, 7.3_
+
+- [ ] 8.3 Implement TodoBloc with event handling
+  - Create TodoBloc class that handles all todo events
+  - Implement state transitions for each event type
+  - Add proper error handling and loading states
+  - Integrate with TodoService for business logic
+  - _Requirements: 3.1, 3.2, 7.1, 7.2_
+
+- [ ] 9. Set up dependency injection
+  - Implement dependency_initialize.dart with GetIt configuration
+  - Register TodoCacheManager, TodoService, and TodoBloc
+  - Configure proper singleton and factory patterns
+  - _Requirements: 3.2, 10.2_
+
+- [ ] 10. Create navigation configuration
+  - Implement app_router.dart with AutoRoute configuration
+  - Define TodoListRoute as the initial route
+  - Set up route generation and navigation handling
+  - _Requirements: 5.1, 5.2, 5.3_
+
+- [ ] 11. Implement reusable UI components
+  - Create CommonElevatedButton with loading state support
+  - Add consistent styling and accessibility features
+  - Include proper Material 3 design implementation
+  - _Requirements: 4.5, 4.2_
+
+- [ ] 12. Create todo list item card widget
+  - Implement TodoListItemCard with checkbox and task display
+  - Add Dismissible wrapper for swipe-to-delete functionality
+  - Implement strikethrough text for completed tasks
+  - Include Material 3 card design and proper styling
+  - _Requirements: 1.5, 1.6, 4.3, 4.6_
+
+- [ ] 13. Create add todo dialog widget
+  - Implement AddTodoDialog with TextField and save button
+  - Add form validation for empty titles
+  - Include localized text and proper error handling
+  - Use CommonElevatedButton for consistent styling
+  - _Requirements: 1.3, 1.4, 6.3, 7.1_
+
+- [ ] 14. Implement main todo list view
+  - Create TodoListView as the main screen with BlocBuilder
+  - Add ListView.builder for displaying todo items
+  - Implement empty state message when no todos exist
+  - Add FloatingActionButton for adding new todos
+  - Include loading indicator and error handling
+  - _Requirements: 1.1, 1.2, 4.3, 4.4, 7.3_
+
+- [ ] 15. Create application initialization
+  - Implement ApplicationInitialize class for app startup
+  - Initialize WidgetsFlutterBinding, EasyLocalization, and Hive
+  - Set up dependency injection and register TodoModel adapter
+  - Configure proper initialization sequence
+  - _Requirements: 10.1, 10.2, 2.1_
+
+- [ ] 16. Implement main.dart with app configuration
+  - Create main function with proper initialization sequence
+  - Wrap app with EasyLocalization and BlocProvider
+  - Configure MaterialApp with dark theme and routing
+  - Ensure proper app startup and navigation to todo list
+  - _Requirements: 10.3, 10.4, 10.5_
+
+- [ ] 17. Run code generation for all generated files
+  - Execute build_runner to generate JSON serialization code
+  - Generate Hive type adapters for TodoModel
+  - Generate AutoRoute navigation code
+  - Ensure all .g.dart files are properly created
+  - _Requirements: 8.5, 9.4_
+
+- [ ] 18. Create comprehensive unit tests for data layer
+  - Write tests for TodoModel serialization and deserialization
+  - Test TodoCacheManager CRUD operations with mocked Hive
+  - Verify TodoService business logic with mocked dependencies
+  - Include edge cases and error scenarios
+  - _Requirements: 8.1, 8.2, 8.4_
+
+- [ ] 19. Create BLoC tests with bloc_test package
+  - Write tests for TodoBloc state transitions
+  - Test AddTodo and DeleteTodo events with expected state changes
+  - Mock TodoService for isolated BLoC testing
+  - Verify loading, success, and error state emissions
+  - _Requirements: 8.2, 8.3, 8.4_
+
+- [ ] 20. Create widget tests for UI components
+  - Test TodoListView rendering in different states (loading, empty, populated)
+  - Test TodoListItemCard completion toggle and dismissible actions
+  - Test AddTodoDialog form validation and submission
+  - Verify CommonElevatedButton loading state behavior
+  - _Requirements: 4.3, 4.4, 4.5, 4.6_
+
+- [ ] 21. Final integration and testing
+  - Verify complete app functionality from startup to todo operations
+  - Test localization switching between Turkish and English
+  - Validate dark theme consistency across all screens
+  - Ensure proper error handling and user feedback
+  - Test data persistence across app restarts
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.3, 4.1, 6.4, 7.1, 7.2, 7.4_# Implementation Plan
+
+- [ ] 1. Set up project configuration and dependencies
+  - Create pubspec.yaml with all required dependencies and dev dependencies
+  - Configure analysis_options.yaml with very_good_analysis rules
+  - Set up folder structure according to architectural requirements
+  - _Requirements: 9.1, 9.2, 9.3, 3.5_
+
+- [ ] 2. Create core constants and extensions
+  - Implement app_constants.dart with application-wide constants
+  - Implement cache_constants.dart with Hive storage keys and constants
+  - Create build_context_extension.dart for localization and theme access
+  - _Requirements: 3.5, 6.3_
+
+- [ ] 3. Implement data model with serialization and Hive support
+  - Create TodoModel class with id, title, and isCompleted fields
+  - Add JsonSerializable annotations for JSON serialization
+  - Add HiveType and HiveField annotations for Hive storage
+  - Implement fromJson, toJson, copyWith methods and Equatable
+  - _Requirements: 2.5, 3.4, 8.5_
+
+- [ ] 4. Create localization assets and configuration
+  - Create assets/translations/tr-TR.json with Turkish translations
+  - Create assets/translations/en-US.json with English translations
+  - Implement localization_initialize.dart for EasyLocalization setup
+  - Update pubspec.yaml to include translation assets
+  - _Requirements: 6.1, 6.2, 6.3, 6.4_
+
+- [ ] 5. Implement dark theme configuration
+  - Create theme_initialize.dart with Material 3 dark theme
+  - Configure ColorScheme, AppBarTheme, CardTheme, and FloatingActionButtonTheme
+  - Ensure theme follows Material 3 design principles
+  - _Requirements: 4.1, 4.2_
+
+- [ ] 6. Create cache management layer
+  - Implement TodoCacheManager class with Hive operations
+  - Add methods for getAllTodos, saveTodo, updateTodo, deleteTodo, clearAllTodos
+  - Include proper error handling and Hive box management
+  - _Requirements: 2.1, 2.2, 2.3, 3.6_
+
+- [ ] 7. Implement service layer for business logic
+  - Create TodoService class with business logic methods
+  - Add loadTodos, addTodo, toggleTodoCompletion, deleteTodo methods
+  - Integrate with TodoCacheManager and handle ID generation
+  - Include error handling and validation
+  - _Requirements: 1.4, 1.5, 1.6, 1.7, 2.2_
+
+- [ ] 8. Create BLoC state management components
+- [ ] 8.1 Implement TodoEvent classes
+  - Create LoadTodos, AddTodo, UpdateTodo, DeleteTodo event classes
+  - Ensure all events extend Equatable for proper comparison
+  - _Requirements: 3.1, 3.4_
+
+- [ ] 8.2 Implement TodoState class
+  - Create TodoState with isLoading, todos list, and error fields
+  - Implement copyWith method and Equatable for immutability
+  - Define initial, loading, success, and error state patterns
+  - _Requirements: 3.1, 3.3, 7.3_
+
+- [ ] 8.3 Implement TodoBloc with event handling
+  - Create TodoBloc class that handles all todo events
+  - Implement state transitions for each event type
+  - Add proper error handling and loading states
+  - Integrate with TodoService for business logic
+  - _Requirements: 3.1, 3.2, 7.1, 7.2_
+
+- [ ] 9. Set up dependency injection
+  - Implement dependency_initialize.dart with GetIt configuration
+  - Register TodoCacheManager, TodoService, and TodoBloc
+  - Configure proper singleton and factory patterns
+  - _Requirements: 3.2, 10.2_
+
+- [ ] 10. Create navigation configuration
+  - Implement app_router.dart with AutoRoute configuration
+  - Define TodoListRoute as the initial route
+  - Set up route generation and navigation handling
+  - _Requirements: 5.1, 5.2, 5.3_
+
+- [ ] 11. Implement reusable UI components
+  - Create CommonElevatedButton with loading state support
+  - Add consistent styling and accessibility features
+  - Include proper Material 3 design implementation
+  - _Requirements: 4.5, 4.2_
+
+- [ ] 12. Create todo list item card widget
+  - Implement TodoListItemCard with checkbox and task display
+  - Add Dismissible wrapper for swipe-to-delete functionality
+  - Implement strikethrough text for completed tasks
+  - Include Material 3 card design and proper styling
+  - _Requirements: 1.5, 1.6, 4.3, 4.6_
+
+- [ ] 13. Create add todo dialog widget
+  - Implement AddTodoDialog with TextField and save button
+  - Add form validation for empty titles
+  - Include localized text and proper error handling
+  - Use CommonElevatedButton for consistent styling
+  - _Requirements: 1.3, 1.4, 6.3, 7.1_
+
+- [ ] 14. Implement main todo list view
+  - Create TodoListView as the main screen with BlocBuilder
+  - Add ListView.builder for displaying todo items
+  - Implement empty state message when no todos exist
+  - Add FloatingActionButton for adding new todos
+  - Include loading indicator and error handling
+  - _Requirements: 1.1, 1.2, 4.3, 4.4, 7.3_
+
+- [ ] 15. Create application initialization
+  - Implement ApplicationInitialize class for app startup
+  - Initialize WidgetsFlutterBinding, EasyLocalization, and Hive
+  - Set up dependency injection and register TodoModel adapter
+  - Configure proper initialization sequence
+  - _Requirements: 10.1, 10.2, 2.1_
+
+- [ ] 16. Implement main.dart with app configuration
+  - Create main function with proper initialization sequence
+  - Wrap app with EasyLocalization and BlocProvider
+  - Configure MaterialApp with dark theme and routing
+  - Ensure proper app startup and navigation to todo list
+  - _Requirements: 10.3, 10.4, 10.5_
+
+- [ ] 17. Run code generation for all generated files
+  - Execute build_runner to generate JSON serialization code
+  - Generate Hive type adapters for TodoModel
+  - Generate AutoRoute navigation code
+  - Ensure all .g.dart files are properly created
+  - _Requirements: 8.5, 9.4_
+
+- [ ] 18. Create comprehensive unit tests for data layer
+  - Write tests for TodoModel serialization and deserialization
+  - Test TodoCacheManager CRUD operations with mocked Hive
+  - Verify TodoService business logic with mocked dependencies
+  - Include edge cases and error scenarios
+  - _Requirements: 8.1, 8.2, 8.4_
+
+- [ ] 19. Create BLoC tests with bloc_test package
+  - Write tests for TodoBloc state transitions
+  - Test AddTodo and DeleteTodo events with expected state changes
+  - Mock TodoService for isolated BLoC testing
+  - Verify loading, success, and error state emissions
+  - _Requirements: 8.2, 8.3, 8.4_
+
+- [ ] 20. Create widget tests for UI components
+  - Test TodoListView rendering in different states (loading, empty, populated)
+  - Test TodoListItemCard completion toggle and dismissible actions
+  - Test AddTodoDialog form validation and submission
+  - Verify CommonElevatedButton loading state behavior
+  - _Requirements: 4.3, 4.4, 4.5, 4.6_
+
+- [ ] 21. Final integration and testing
+  - Verify complete app functionality from startup to todo operations
+  - Test localization switching between Turkish and English
+  - Validate dark theme consistency across all screens
+  - Ensure proper error handling and user feedback
+  - Test data persistence across app restarts
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 2.3, 4.1, 6.4, 7.1, 7.2, 7.4_

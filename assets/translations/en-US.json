@@ -1,0 +1,15 @@
+{
+  "app": {
+    "title": "Task Manager"
+  },
+  "todos": {
+    "add": "Add New Task",
+    "empty": "Great! You have no tasks left.",
+    "hint": "What do you need to do?"
+  },
+  "general": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "error": "An error occurred. Please try again."
+  }
+} 

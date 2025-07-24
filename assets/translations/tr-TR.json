@@ -1,0 +1,15 @@
+{
+  "app": {
+    "title": "Görev Yöneticisi"
+  },
+  "todos": {
+    "add": "Yeni Görev Ekle",
+    "empty": "Harika! Hiç görevin kalmamış.",
+    "hint": "Ne yapman gerekiyor?"
+  },
+  "general": {
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "error": "Bir hata oluştu. Lütfen tekrar deneyin."
+  }
+} 

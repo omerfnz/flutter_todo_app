@@ -1,0 +1,38 @@
+name: flutter_todo_app
+description: "A new Flutter project based on a professional architecture."
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  auto_route: ^7.8.4
+  cupertino_icons: ^1.0.8
+  easy_localization: ^3.0.7
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.6
+  get_it: ^7.7.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  json_annotation: ^4.9.0
+  uuid: ^4.5.1
+
+dev_dependencies:
+  auto_route_generator: ^7.3.2
+  bloc_test: ^9.1.7
+  build_runner: ^2.4.6
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+  hive_generator: ^2.0.1
+  json_serializable: ^6.7.1
+  mockito: ^5.4.4
+  very_good_analysis: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/translations/
